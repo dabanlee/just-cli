@@ -1,6 +1,6 @@
 {
   "name": "just-cli",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Just a simple CLI.",
   "main": "./bin/just.js",
   "scripts": {
