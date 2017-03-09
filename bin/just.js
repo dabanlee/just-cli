@@ -28,4 +28,10 @@ commander
     .alias('a')
     .action(require('./add'));
 
+commander
+    .command('remove')
+    .description('Remove template')
+    .alias('r')
+    .action(require('./remove'));
+
 if (!commander.parse(process.argv).args.length) commander.help();
