@@ -13,19 +13,19 @@ module.exports = () => {
         branch = ``;
 
     if (!templateName) {
-        console.log(colors.red('× Please enter template name.'));
+        console.log(colors.red('\n × Please enter template name.'));
         console.log(colors.green('√ just init <template-name> <project-name> \n '));
         process.exit();
     }
 
     if (!projectName) {
-        console.log(colors.red('× Please enter project name.'));
+        console.log(colors.red('\n × Please enter project name.'));
         console.log(colors.green('√ just init <template-name> <project-name> \n '));
         process.exit();
     }
 
     if (!configure.templates[templateName]) {
-        console.log(colors.red('× This template is not in the configuration file! \n '));
+        console.log(colors.red('\n × This template is not in the configuration file! \n '));
         process.exit();
     }
 
@@ -34,14 +34,14 @@ module.exports = () => {
 
     gitCommand = `git clone -b ${branch} ${gitUrl} ${projectName}`;
 
-    console.log(colors.white('Waiting... \n'))
+    console.log(colors.white('\n Waiting... \n'))
 
     exec(gitCommand, error => {
         if (error) {
             console.log(colors.red(error));
             process.exit();
         }
-        console.log(colors.green('√ Generation completed! \n'));
+        console.log(colors.green('✨  Generation completed! \n'));
         console.log(`cd ${projectName} && npm i \n`);
         process.exit();
     });
