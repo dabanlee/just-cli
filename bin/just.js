@@ -22,4 +22,10 @@ commander
     .alias('l')
     .action(require('./list'));
 
+commander
+    .command('add')
+    .description('Add template')
+    .alias('a')
+    .action(require('./add'));
+
 if (!commander.parse(process.argv).args.length) commander.help();
