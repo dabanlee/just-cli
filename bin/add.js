@@ -9,16 +9,11 @@ const configure = require('../configure');
 module.exports = () => {
     co(function* () {
         let templateName = yield prompt(colors.green('\n template name: ')),
-            branchName = yield prompt(colors.green('\n branch: ')),
+            branchName = yield prompt(colors.green('\n branch(master): ')),
             gitUrl = yield prompt(colors.green('\n git: '));
 
         if (!templateName) {
             console.log(colors.red('\n × Please enter template name.\n'));
-            process.exit();
-        }
-
-        if (!branchName) {
-            console.log(colors.red('\n × Please enter branch name.\n'));
             process.exit();
         }
 
@@ -29,7 +24,7 @@ module.exports = () => {
 
         if (!configure.templates[templateName]) {
             configure.templates[templateName] = {};
-            configure.templates[templateName]['branch'] = branchName;
+            configure.templates[templateName]['branch'] = branchName ? branchName : 'master';
             configure.templates[templateName]['git'] = gitUrl;
 
             fs.writeFile(`${__dirname}/../configure.json`, JSON.stringify(configure, null, '  '), 'utf-8', error => {
