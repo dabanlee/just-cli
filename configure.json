@@ -1,8 +1,8 @@
 {
   "templates": {
-      "vue": {
-          "branch": "master",
-          "git": "https://github.com/JustClear/just-vue.git"
-      }
+    "vue": {
+      "branch": "master",
+      "git": "https://github.com/JustClear/just-vue.git"
+    }
   }
 }
