@@ -1,7 +1,7 @@
 'use strict'
 
 const colors = require('colors');
-const exec = require('child_process').exec;
+const execSync = require('child_process').execSync;
 const configure = require('../configure');
 const params = process.argv.slice(2);
 
@@ -36,13 +36,12 @@ module.exports = () => {
 
     console.log(colors.white('\n Waiting... \n'))
 
-    exec(gitCommand, error => {
-        if (error) {
-            console.log(colors.red(error));
-            process.exit();
-        }
-        console.log(colors.green('✨  Generation completed! \n'));
+    if (execSync(gitCommand)) {
+        execSync(`rm -rf ./${projectName}/.git`);
+        console.log(colors.green('\n✨  Generation completed! \n'));
         console.log(`cd ${projectName} && npm i \n`);
-        process.exit();
-    });
+    } else {
+        console.log(colors.red('\n × git clone failure! \n '));
+    }
+    process.exit();
 };
