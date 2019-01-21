@@ -2,27 +2,52 @@
 
 Just a simple CLI.
 
-### Installation
+## Installation
 
 ```sh
-$ npm install -g just-cli
+$ yarn global add just-cli
 ```
 
-### Get Started
+## Get Started
+
+### Add template
 
 ```sh
-$ just init <template-name> <project-name>
+$ just add
+$ template name:
+$ branch(master):
+$ git:
+# or
+$ just add -n <template name> -b <branch name> -g <git URL>
 ```
 
 Example:
 
 ```sh
-$ just init vue hello
+$ just add -n vue-pages -b master -g https://github.com/JustClear/vue-pages.git
 ```
 
-The above command pulls the template from [JustClear/just-vue](https://github.com/JustClear/just-vue)(specify in configuration file), prompts for some information, and generates the project at `./hello/`.
+Template added:
 
-### Usage
+```json
+{
+    "vue-pages": {
+        "branch": "master",
+        "git": "https://github.com/JustClear/vue-pages.git"
+    }
+}
+```
+
+Then:
+
+```sh
+$ just init <template-name> <project-name>
+$ cd <project-name>
+$ yarn
+$ yarn start
+```
+
+## Usage
 
 ```sh
 Usage: just <command>

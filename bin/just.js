@@ -25,6 +25,9 @@ commander
 commander
     .command('add')
     .description('Add template')
+    .option('-n, --name <string>', 'template name')
+    .option('-b, --branch <string>', 'template branch')
+    .option('-g, --git <string>', 'template git')
     .alias('a')
     .action(require('./add'));
 
