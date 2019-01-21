@@ -14,9 +14,9 @@ $ yarn global add just-cli
 
 ```sh
 $ just add
-$ template name:
-$ branch(master):
-$ git:
+$ # template name:
+$ # branch(master):
+$ # git:
 # or
 $ just add -n <template name> -b <branch name> -g <git URL>
 ```
