@@ -39,3 +39,7 @@ Usage: just <command>
     -h, --help     output usage information
     -V, --version  output the version number
 ```
+
+## License
+
+Licensed under the [MIT License](https://github.com/JustClear/just-cli/blob/master/LICENSE)
