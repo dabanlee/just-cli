@@ -31,7 +31,7 @@ module.exports = () => {
     const branch = configure.templates[templateName].branch
     const gitCommand = `git clone -b ${branch} ${gitUrl} ${projectName}`
 
-    console.log(colors.white('\n Waiting... \n'))
+    console.log(colors.green('\n ⌛️ Waiting... \n'))
 
     if (execSync(gitCommand)) {
         const packages = require(path.resolve(process.cwd(), projectName, 'package.json'))
@@ -49,7 +49,6 @@ module.exports = () => {
         packages.moduleName = camelize(getName(projectName))
         packages.main = `dist/${getName(projectName)}.js`
         packages.module = `dist/${getName(projectName)}.es.js`
-        console.log(JSON.stringify(packages, null, '  '));
         
         try {
             fs.writeFileSync(`${process.cwd()}/${projectName}/package.json`, JSON.stringify(packages, null, '  '), 'utf-8')
