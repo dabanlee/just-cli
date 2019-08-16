@@ -1,47 +1,74 @@
 'use strict'
 
-const colors = require('colors');
-const execSync = require('child_process').execSync;
-const configure = require('../configure');
-const params = process.argv.slice(2);
+const fs = require('fs')
+const path = require('path')
+const colors = require('colors')
+const execSync = require('child_process').execSync
+const configure = require('../configure')
+const params = process.argv.slice(2)
 
 module.exports = () => {
-    let templateName = params[1],
-        projectName = params[2],
-        gitCommand = ``,
-        gitUrl = ``,
-        branch = ``;
+    const [_, templateName, projectName] = params
 
     if (!templateName) {
-        console.log(colors.red('\n × Please enter template name.'));
-        console.log(colors.green('√ just init <template-name> <project-name> \n '));
-        process.exit();
+        console.log(colors.red('\n × Please enter template name.'))
+        console.log(colors.green('√ just init <template-name> <project-name> \n '))
+        process.exit()
     }
 
     if (!projectName) {
-        console.log(colors.red('\n × Please enter project name.'));
-        console.log(colors.green('√ just init <template-name> <project-name> \n '));
-        process.exit();
+        console.log(colors.red('\n × Please enter project name.'))
+        console.log(colors.green('√ just init <template-name> <project-name> \n '))
+        process.exit()
     }
 
     if (!configure.templates[templateName]) {
-        console.log(colors.red('\n × This template is not in the configuration file! \n '));
-        process.exit();
+        console.log(colors.red('\n × This template is not in the configuration file! \n '))
+        process.exit()
     }
 
-    gitUrl = configure.templates[templateName].git;
-    branch = configure.templates[templateName].branch;
-
-    gitCommand = `git clone -b ${branch} ${gitUrl} ${projectName}`;
+    const gitUrl = configure.templates[templateName].git
+    const branch = configure.templates[templateName].branch
+    const gitCommand = `git clone -b ${branch} ${gitUrl} ${projectName}`
 
     console.log(colors.white('\n Waiting... \n'))
 
     if (execSync(gitCommand)) {
-        execSync(`rm -rf ./${projectName}/.git`);
-        console.log(colors.green('\n✨  Generation completed! \n'));
-        console.log(`cd ${projectName} && npm i \n`);
+        const packages = require(path.resolve(process.cwd(), projectName, 'package.json'))
+        execSync(`rm -rf ./${projectName}/.git ./${projectName}/package.json`)
+        packageJSONUpdate(packages)
+        console.log(colors.green('\n✨  Generation completed! \n'))
+        console.log(`cd ${projectName} && npm i \n`)
     } else {
-        console.log(colors.red('\n × git clone failure! \n '));
+        console.log(colors.red('\n × git clone failure! \n '))
     }
-    process.exit();
-};
+    process.exit()
+
+    function packageJSONUpdate(packages) {
+        packages.name = projectName
+        packages.moduleName = camelize(getName(projectName))
+        packages.main = `dist/${getName(projectName)}.js`
+        packages.module = `dist/${getName(projectName)}.es.js`
+        console.log(JSON.stringify(packages, null, '  '));
+        
+        try {
+            fs.writeFileSync(`${process.cwd()}/${projectName}/package.json`, JSON.stringify(packages, null, '  '), 'utf-8')
+        } catch (error) {
+            console.log(error)
+        } finally {
+            process.exit()
+        }
+    }
+}
+
+function camelize(string) {
+    if (typeof string !== 'string') return console.warn('you can only camelize a string.')
+    return string.replace(/[_.-](\w|$)/g, (match, $) => $.toUpperCase())
+}
+
+function getName(name) {
+    if (name.startsWith('@') && name.includes('/')) {
+        return name.split('/')[1]
+    }
+    return name
+}

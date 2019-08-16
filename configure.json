@@ -3,6 +3,10 @@
     "vue-pages": {
       "branch": "master",
       "git": "https://github.com/JustClear/vue-pages.git"
+    },
+    "npm": {
+      "branch": "master",
+      "git": "https://github.com/JustClear/npmkit.git"
     }
   }
 }
