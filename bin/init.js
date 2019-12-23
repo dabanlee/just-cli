@@ -3,12 +3,15 @@
 const fs = require('fs')
 const path = require('path')
 const colors = require('colors')
+const fetch = require('node-fetch')
 const execSync = require('child_process').execSync
-const configure = require('../configure')
+const { templates: templatesFromLocal } = require('../configure')
 const params = process.argv.slice(2)
 
-module.exports = () => {
+module.exports = async () => {
     const [_, templateName, projectName] = params
+    const { templates: templatesFromGit } = await fetch('https://raw.githubusercontent.com/JustClear/just-cli/master/configure.json').then(response => response.json())
+    const templates = Object.assign(templatesFromLocal, templatesFromGit)
 
     if (!templateName) {
         console.log(colors.red('\n × Please enter template name.'))
@@ -22,13 +25,13 @@ module.exports = () => {
         process.exit()
     }
 
-    if (!configure.templates[templateName]) {
+    if (!templates[templateName]) {
         console.log(colors.red('\n × This template is not in the configuration file! \n '))
         process.exit()
     }
 
-    const gitUrl = configure.templates[templateName].git
-    const branch = configure.templates[templateName].branch
+    const gitUrl = templates[templateName].git
+    const branch = templates[templateName].branch
     const gitCommand = `git clone -b ${branch} ${gitUrl} ${projectName}`
 
     console.log(colors.green('\n ⌛️ Waiting... \n'))
@@ -42,6 +45,7 @@ module.exports = () => {
     } else {
         console.log(colors.red('\n × git clone failure! \n '))
     }
+
     process.exit()
 
     function packageJSONUpdate(packages) {

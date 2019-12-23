@@ -1,8 +1,8 @@
 {
   "templates": {
-    "vue-pages": {
+    "game": {
       "branch": "master",
-      "git": "https://github.com/JustClear/vue-pages.git"
+      "git": "https://github.com/JustClear/game-template.git"
     },
     "npm": {
       "branch": "master",
