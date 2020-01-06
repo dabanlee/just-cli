@@ -3,15 +3,12 @@
 const fs = require('fs')
 const path = require('path')
 const colors = require('colors')
-const fetch = require('node-fetch')
 const execSync = require('child_process').execSync
-const { templates: templatesFromLocal } = require('../configure')
+const { templates } = require('../configure')
 const params = process.argv.slice(2)
 
 module.exports = async () => {
     const [_, templateName, projectName] = params
-    const { templates: templatesFromGit } = await fetch('https://raw.githubusercontent.com/JustClear/just-cli/master/configure.json').then(response => response.json())
-    const templates = Object.assign(templatesFromLocal, templatesFromGit)
 
     if (!templateName) {
         console.log(colors.red('\n × Please enter template name.'))
