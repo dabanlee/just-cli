@@ -1,38 +1,21 @@
 #!/usr/bin/env node
-
 'use strict'
 
-const commander = require('commander')
+const update = require('update-notifier')
+const chalk = require('chalk')
+const { commands } = require('../dist/cli')
+const { help, hasCommand, getCommandName, checkCommand, getArgv } = require('../dist/cli')
+const pkg = require('../package.json')
 
-commander.version(require('../package').version)
+update({ pkg }).notify()
 
-commander.usage('<command>')
-
-commander
-    .command('init')
-    .description('Initialize a new project')
-    .alias('i')
-    .action(require('./init'))
-
-commander
-    .command('list')
-    .description('List the configuration file')
-    .alias('l')
-    .action(require('./list'))
-
-commander
-    .command('add')
-    .description('Add template')
-    .option('-n, --name <string>', 'template name')
-    .option('-b, --branch <string>', 'template branch')
-    .option('-g, --git <string>', 'template git')
-    .alias('a')
-    .action(require('./add'))
-
-commander
-    .command('remove')
-    .description('Remove template')
-    .alias('r')
-    .action(require('./remove'))
-
-if (!commander.parse(process.argv).args.length) commander.help()
+if (hasCommand() && checkCommand(commands)) {
+    commands[getCommandName()]()
+} else {
+    const { v, version } = getArgv()
+    if (v || version) {
+        console.log(chalk.green(`v${pkg.version}`))
+    } else {
+        help()
+    }
+}

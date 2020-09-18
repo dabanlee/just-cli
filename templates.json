@@ -1,0 +1,9 @@
+{
+  "npm": {
+    "branch": "master",
+    "git": "https://github.com/dabanlee/npmkit.git"
+  },
+  "undefined": {
+    "branch": "master"
+  }
+}

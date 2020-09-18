@@ -17,6 +17,7 @@ $ just add
 $ # template name:
 $ # branch(master):
 $ # git:
+
 # or
 $ just add -n <template name> -b <branch name> -g <git URL>
 ```
@@ -24,16 +25,16 @@ $ just add -n <template name> -b <branch name> -g <git URL>
 Example:
 
 ```sh
-$ just add -n vue-pages -b master -g https://github.com/JustClear/vue-pages.git
+$ just add -n npm -b master -g https://github.com/dabanlee/npmkit.git
 ```
 
 Template added:
 
 ```json
 {
-    "vue-pages": {
+    "npm": {
         "branch": "master",
-        "git": "https://github.com/JustClear/vue-pages.git"
+        "git": "https://github.com/dabanlee/npmkit.git"
     }
 }
 ```
@@ -52,19 +53,19 @@ $ yarn start
 ```sh
 Usage: just <command>
 
-  Commands:
+  VERSION: 2.0.0
 
-    init|i     Initialize a new project
-    list|l     List the configuration file
-    add|a      Add template
-    remove|r   Remove template
+  USAGE:
+    $ just init       Initialize a new project
+    $ just add        Add template
+    $ just list       List the templates file
+    $ just remove     Remove template
 
-  Options:
-
-    -h, --help     output usage information
-    -V, --version  output the version number
+  OPTIONS:
+    -h, --help        Show usage message
+    -v, --version     Show the current version number
 ```
 
 ## License
 
-Licensed under the [MIT License](https://github.com/JustClear/just-cli/blob/master/LICENSE)
+Licensed under the [MIT License](https://github.com/dabanlee/just-cli/blob/master/LICENSE)
