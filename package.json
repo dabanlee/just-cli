@@ -1,6 +1,6 @@
 {
   "name": "just-cli",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "project starter command line tool.",
   "main": "bin/just.js",
   "types": "types/index.d.ts",
