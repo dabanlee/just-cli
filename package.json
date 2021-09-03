@@ -7,6 +7,10 @@
   "bin": {
     "just": "bin/just.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dabanlee/just-cli.git"
+  },
   "scripts": {
     "start": "NODE_ENV=development rollup -w -c rollup.config.js",
     "dev": "NODE_ENV=development rollup -c rollup.config.js",
